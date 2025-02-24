@@ -1,0 +1,27 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_NAME: $USER_NAME
+        USER_ID: $USER_ID
+        GROUP_NAME: $GROUP_NAME
+        GROUP_ID: $GROUP_ID
+    # debugging
+    cap_add:
+      - SYS_PTRACE
+    privileged: true
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    network_mode: host
+    user: $USER_NAME
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw # gui
+      - /home/$USER_NAME/.ssh:/home/$USER_NAME/.ssh:ro # git credentials
+      - /home/$USER_NAME/data:/home/$USER_NAME/data:rw
+      - ../:/home/$USER_NAME/rust
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1

@@ -1,0 +1,7 @@
+{
+  "name": "rust",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "dev",
+  "workspaceFolder": "/home/${localEnv:USER}/rust/rust-ws",
+  "postCreateCommand": "cargo --version"
+}
