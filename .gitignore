@@ -1,0 +1,2 @@
+.devcontainer/.env
+rust-ws/**/target/
