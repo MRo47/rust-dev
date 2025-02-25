@@ -22,6 +22,7 @@ services:
       - /home/$USER_NAME/.ssh:/home/$USER_NAME/.ssh:ro # git credentials
       - /home/$USER_NAME/data:/home/$USER_NAME/data:rw
       - ../:/home/$USER_NAME/rust
+      - ./zsh_history:/home/$USER_NAME/.zsh_history
     environment:
       - DISPLAY=$DISPLAY
       - QT_X11_NO_MITSHM=1

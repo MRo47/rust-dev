@@ -25,6 +25,10 @@ RUN set -ex; \
     && echo $USER_NAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USER_NAME \
     && chmod 0440 /etc/sudoers.d/$USER_NAME
 
+RUN rustup component add rustfmt clippy \
+    && cargo install cargo-edit \
+    && rm -rf /var/lib/apt/lists/*
+
 USER $USER_NAME
 
 # zsh install
@@ -32,5 +36,14 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     -t robbyrussell \
     -p git \
     -p sudo
+
+# Append Zsh history settings to ~/.zshrc
+RUN cat <<'EOF' >> ~/.zshrc
+# Persist Zsh history across container rebuilds
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+EOF
 
 CMD ["/usr/bin/zsh"]
